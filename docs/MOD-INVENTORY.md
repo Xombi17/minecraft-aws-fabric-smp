@@ -1,8 +1,8 @@
 # Mod & Datapack Inventory (Minecraft 26.3 / Fabric 0.20.1)
 
-All mods were downloaded directly from Modrinth and verified via SHA-512 against `/home/ec2-user/minecraft/mods_manifest.json`. All 17 JARs load server-side with **no client mods required** so new players can join with a vanilla `26.3` client.
+All mods were downloaded directly from Modrinth and verified via SHA-512 against `/home/ec2-user/minecraft/mods_manifest.json`. All 18 JARs load server-side with **no client mods required** so new players can join with a vanilla `26.3` client (clients with `Voxy` + `Voxygen` additionally receive server-generated distant LOD terrain automatically).
 
-## Installed Fabric 26.3 Mods (17 JARs)
+## Installed Fabric 26.3 Mods (18 JARs)
 
 | Mod | Version | Channel | Side (`server` / `client`) | Purpose | Source |
 |---|---|---|---|---|---|
@@ -23,8 +23,10 @@ All mods were downloaded directly from Modrinth and verified via SHA-512 against
 | Forge Config API Port | `v26.3.1` | Release | optional / optional | Required dependency for Get It Together, Drops! | [Modrinth](https://modrinth.com/mod/forge-config-api-port) |
 | Spark | `1.10.187-fabric` | Release | optional / optional | CPU/heap/MSPT profiler | [Modrinth](https://modrinth.com/mod/spark) |
 | Chunky | `1.5.66` | Release | optional / optional | Controlled chunk pre-generation | [Modrinth](https://modrinth.com/mod/chunky) |
+| Voxygen | `3.0.0` | Release | required / optional | Server-side Voxy LOD worldgen & streaming (`radius: 512`, `threads: 1`) | [Modrinth](https://modrinth.com/mod/xT0lnNE9) |
 
-### Excluded Mods (Compatibility / Client-Requirement Decisions)
+### Excluded Mods / Compatibility Notes
+- **VMP + Voxygen compatibility:** `/home/ec2-user/minecraft/config/vmp.properties` sets `use_optimized_entity_tracking=false` because VMP's `MixinThreadedAnvilChunkStorageEntityTracker` and Voxygen's `TrackedEntityMixin` both `@Redirect` `ChunkMap.isChunkTracked` inside `TrackedEntity.updatePlayer`.
 - **Noisium (`NoisiumForked`):** Latest Modrinth build targets `26.2`; excluded until a verified `26.3` build releases.
 - **Lootr / Trade Cycling / Distant Horizons:** Excluded for the fresh vanilla-client-compatible world (Lootr and Trade Cycling require client installs on Modrinth).
 - **Moonrise:** Not installed (conflicts with C2ME/ScalableLux).

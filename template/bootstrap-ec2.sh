@@ -161,6 +161,31 @@ exec java \
 EOF
 chmod +x "${MC_DIR}/start.sh" "${MC_DIR}/scripts/"*.sh "${MC_DIR}/scripts/"*.py
 
+# Write safe defaults for VMP + Voxygen (avoids TrackedEntityMixin @Redirect conflict and bounds worker threads)
+cat > "${MC_DIR}/config/vmp.properties" << 'EOF'
+use_optimized_entity_tracking=false
+EOF
+
+cat > "${MC_DIR}/config/voxyworldgenv3.json" << 'EOF'
+{
+  "enabled": true,
+  "engine": "PIPELINE",
+  "radius": 512,
+  "threads": 1,
+  "tileSize": 16,
+  "msptLimit": 40,
+  "lightMode": "ACCURATE",
+  "ticketInflight": 64,
+  "sendPerTick": 24,
+  "threadPriority": 2,
+  "horizonEnabled": false,
+  "horizonDistanceK": 40,
+  "horizonDetail": 100,
+  "detailDistance": 512,
+  "detailDecorate": false
+}
+EOF
+
 echo "[6/7] Installing systemd units and initial world boot..."
 sudo tee /etc/default/mc-idle-shutdown > /dev/null << EOF
 IDLE_TIMEOUT_SECONDS=${IDLE_TIMEOUT_SECONDS}

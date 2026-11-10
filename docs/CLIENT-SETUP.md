@@ -9,10 +9,10 @@ Configured PrismLauncher instance `~/.local/share/PrismLauncher/instances/26.3/`
 - **Heap:** `MinMemAlloc=512`, `MaxMemAlloc=6144` (`6 GiB`)
 - **GPU Offload:** `UseDiscreteGpu=true`, `OverridePerformance=true` (forces NVIDIA RTX 4060 instead of integrated Intel UHD Graphics)
 - **Distant Views & Rendering Alignment:**
-  - `config/voxy-config.json`: `enabled=true`, `enable_rendering=true`, `ingest_enabled=true`, `section_render_distance=16.0` (**512 chunks** in Voxy's UI)
-  - `config/voxyworldgenv3.json`: `enabled=true`, `detailDistance=512`, `radius=128`
+  - `config/voxy-config.json`: `enabled=true`, `enable_rendering=true`, `ingest_enabled=true`, `section_render_distance=16.0` (**512 chunks** in Voxy's UI), `fog_mode="off"`
+  - `config/voxyworldgenv3.json`: `enabled=false` locally (prevents local singleplayer generation threads from hurting client FPS while still receiving server-streamed Voxygen LODs via `LodReceiver`)
   - `config/bobby.conf`: `max-render-distance=32`, `no-block-entities=true`, `unload-delay-secs=60` (caches server chunks sent at `view-distance=10`)
-  - `config/nvidium-config.json`: `enable_temporal_coherence=true`, `async_bfs=true`, `use_nv_fragment_shader_barycentric=true`
+  - `config/nvidium-config.json`: `max_geometry_memory=1024`, `region_keep_distance=64`, `enable_temporal_coherence=true`, `async_bfs=true`, `use_nv_fragment_shader_barycentric=true`
   - `config/sodium-options.json`: `use_no_error_g_l_context=true`, `animate_only_visible_textures=true`, `chunk_builder_threads=0`
   - `options.txt`: `enableVsync=false`, `maxFps=260` (uncapped), `entityShadows=false`, `biomeBlendRadius=1`, `particles=1`
 - **Multiplayer Entry (`servers.dat`):** Pre-added `AWS Mumbai 26.3 Fabric SMP` (`43.204.157.116`)

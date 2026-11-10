@@ -13,7 +13,7 @@
 ├── config/                  # Mod configs (ServerCore, C2ME, Lithium, Chunky, etc.)
 ├── libraries/               # Fabric & Minecraft libraries
 ├── logs/                    # latest.log + rotating gc.log
-├── mods/                    # 17 verified 26.3 Fabric JARs
+├── mods/                    # 18 verified 26.3 Fabric JARs (incl. Voxygen LOD streamer)
 ├── run/                     # Named pipe console.fifo for safe systemd/backup commands
 ├── scripts/
 │   ├── backup.sh
@@ -61,6 +61,11 @@ EXTRA_FLAGS="-XX:+ExitOnOutOfMemoryError -Dfile.encoding=UTF-8"
 
 - `lobotomize-villagers.enabled: true` (`tick-interval: 20`)
 - `dynamic.enabled: true` (`target-mspt: 35`, scaling `CHUNK_TICK_DISTANCE` / `SIMULATION_DISTANCE` / `MOBCAP_PERCENTAGE` / `VIEW_DISTANCE` down under heavy player load, capped at `server.properties` limits `10` / `6`)
+
+## Voxygen Server-Side LOD Streaming & VMP Compatibility
+
+- **`config/voxyworldgenv3.json`:** `enabled: true`, `engine: "PIPELINE"`, `radius: 512`, `threads: 1`, `msptLimit: 40`, `ticketInflight: 64`, `sendPerTick: 24`, `threadPriority: 2`, `lightMode: "ACCURATE"`, `horizonEnabled: false`. Builds LOD terrain off the server thread and streams unexplored chunks out to 512-chunk radius to connected `Voxy` + `Voxygen` clients without generating heavy TPS load.
+- **`config/vmp.properties`:** `use_optimized_entity_tracking=false` to avoid a SpongePowered Mixin `@Redirect` conflict with Voxygen's `TrackedEntityMixin` on `ChunkMap$TrackedEntity.updatePlayer`.
 
 ## systemd Lifecycle & Idle Auto-Shutdown
 

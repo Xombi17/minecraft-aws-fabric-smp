@@ -17,3 +17,5 @@ clumps
 get-it-together-drops
 spark
 chunky
+# Voxygen (server-side Voxy LOD generation & streaming; pairs with VMP use_optimized_entity_tracking=false)
+xT0lnNE9
