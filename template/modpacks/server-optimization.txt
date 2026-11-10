@@ -1,0 +1,19 @@
+# Curated server-side Fabric optimization & utility mods (Modrinth slugs/IDs).
+# template/resolve_mods.py automatically resolves compatible versions + required
+# dependencies for the target MC_VERSION in your deploy config.
+fabric-api
+lithium
+ferrite-core
+krypton
+c2me-fabric
+scalablelux
+servercore
+vmp-fabric
+alternate-current
+debugify
+packet-fixer
+modernfix-mvus
+clumps
+get-it-together-drops
+spark
+chunky

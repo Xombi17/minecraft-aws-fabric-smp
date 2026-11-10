@@ -1,0 +1,10 @@
+[Unit]
+Description=Run Minecraft World Backup every 6 hours while server is running
+
+[Timer]
+OnCalendar=*-*-* 00/6:00:00
+RandomizedDelaySec=120
+Persistent=false
+
+[Install]
+WantedBy=timers.target

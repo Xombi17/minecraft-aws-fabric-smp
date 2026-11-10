@@ -1,0 +1,14 @@
+[Unit]
+Description=Minecraft Automated World Backup
+
+[Service]
+Type=oneshot
+User=ec2-user
+Group=ec2-user
+ExecStart=/home/ec2-user/minecraft/scripts/backup.sh scheduled
+Nice=10
+IOSchedulingClass=best-effort
+IOSchedulingPriority=6
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=mc-backup

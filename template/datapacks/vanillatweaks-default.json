@@ -1,0 +1,23 @@
+{
+  "decorative/cosmetic": [
+    "more mob heads",
+    "player head drops",
+    "silence mobs"
+  ],
+  "convenience": [
+    "chunk loaders",
+    "double shulker shells",
+    "fast leaf decay",
+    "multiplayer sleep",
+    "timber",
+    "unlock all recipes"
+  ],
+  "gameplay changes": [
+    "anti ghast grief",
+    "armored elytra",
+    "graves"
+  ],
+  "informative": [
+    "nether portal coords"
+  ]
+}

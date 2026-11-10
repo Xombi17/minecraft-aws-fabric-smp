@@ -1,0 +1,24 @@
+# Secrets, private keys, and local credentials
+*.pem
+*.key
+*credentials*
+*.env
+!*.env.example
+
+# Minecraft world data, archives, and logs
+world/
+backups/
+logs/
+*.tar.gz
+*.tar.zst
+*.zip
+*.mrpack
+*.jar
+staging/
+
+# OS / IDE artifacts
+.directory
+.DS_Store
+__pycache__/
+*.pyc
+.vscode/

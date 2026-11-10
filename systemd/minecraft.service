@@ -1,0 +1,24 @@
+[Unit]
+Description=Minecraft 26.3 Fabric SMP Server
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=ec2-user
+Group=ec2-user
+WorkingDirectory=/home/ec2-user/minecraft
+ExecStart=/home/ec2-user/minecraft/start.sh
+ExecStop=/home/ec2-user/minecraft/scripts/mc-graceful-stop.sh $MAINPID
+TimeoutStartSec=120
+TimeoutStopSec=120
+Restart=on-failure
+RestartSec=10
+KillMode=mixed
+KillSignal=SIGTERM
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=minecraft
+
+[Install]
+WantedBy=multi-user.target
