@@ -39,7 +39,8 @@ python3 /tmp/resolve_mods.py \
   --mc-version "${MC_VERSION}" \
   --mod-list /tmp/server-mods.txt \
   --manifest-out "${MC_DIR}/mods_manifest.json" \
-  --download-dir "${MC_DIR}/mods"
+  --download-dir "${MC_DIR}/mods" \
+  --server-only
 
 if [[ -f /tmp/vanillatweaks.json ]]; then
   echo "[4b/7] Fetching Vanilla Tweaks ${MC_VERSION} datapacks..."

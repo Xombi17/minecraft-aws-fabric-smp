@@ -36,6 +36,7 @@ def main() -> int:
     ap.add_argument("--mod-list", required=True)
     ap.add_argument("--manifest-out", required=True)
     ap.add_argument("--download-dir", default="")
+    ap.add_argument("--server-only", action="store_true", help="Skip mods/dependencies marked server_side=unsupported")
     args = ap.parse_args()
 
     with open(args.mod_list, "r", encoding="utf-8") as f:
@@ -63,6 +64,10 @@ def main() -> int:
         if pid in visited_ids:
             continue
         visited_ids.add(pid)
+
+        if args.server_only and proj.get("server_side") == "unsupported":
+            print(f"[SKIP] {slug:24s} (client-only dependency: server_side=unsupported)")
+            continue
 
         ver = pick_version(pid, args.mc_version)
         if not ver:
