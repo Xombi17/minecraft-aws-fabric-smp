@@ -51,21 +51,22 @@ EXTRA_FLAGS="-XX:+ExitOnOutOfMemoryError -Dfile.encoding=UTF-8"
 ## Key `server.properties` Settings
 
 - `max-players=20`, `difficulty=easy`, `gamemode=survival`
-- `view-distance=8`, `simulation-distance=6`
+- `view-distance=10`, `simulation-distance=6` (aligned with client Bobby/Voxy chunk caching)
 - `online-mode=true`, `enable-rcon=false`, `white-list=false`
 - `pause-when-empty-seconds=60` (pauses world ticking 60s after empty, conserving CPU before idle shutdown)
 - `sync-chunk-writes=true`, `use-native-transport=true`
+- **Server Operator (`ops.json`):** `Xombi17` (`9a9524e5-6c0e-4a82-a508-20505c9a0153`, level `4`)
 
 ## ServerCore Tuning (`config/servercore/config.yml`)
 
 - `lobotomize-villagers.enabled: true` (`tick-interval: 20`)
-- `dynamic.enabled: true` (`target-mspt: 35`, scaling `CHUNK_TICK_DISTANCE` / `SIMULATION_DISTANCE` / `MOBCAP_PERCENTAGE` / `VIEW_DISTANCE` down under heavy player load, capped at `server.properties` limits `8` / `6`)
+- `dynamic.enabled: true` (`target-mspt: 35`, scaling `CHUNK_TICK_DISTANCE` / `SIMULATION_DISTANCE` / `MOBCAP_PERCENTAGE` / `VIEW_DISTANCE` down under heavy player load, capped at `server.properties` limits `10` / `6`)
 
 ## systemd Lifecycle & Idle Auto-Shutdown
 
 - **`/etc/systemd/system/minecraft.service`:** Runs `start.sh` as `ec2-user`, auto-starts on EC2 boot, restarts on unexpected failures (`Restart=on-failure`), and runs `mc-graceful-stop.sh $MAINPID` (`save-all flush` + `stop`, `TimeoutStopSec=120`) via `run/console.fifo`.
 - **`/etc/systemd/system/mc-idle-shutdown.service` + `/etc/default/mc-idle-shutdown`:**
-  - Polls local Server List Ping (`127.0.0.1:25565`) and established `:25565` TCP sockets every `30s` (with `300s` boot grace).
+  - Polls local Server List Ping (`127.0.0.1:25565`) and established `:25565` TCP sockets every `30s` (with `300s` boot grace), and pauses countdown while an active Chunky pre-generation task is running.
   - After `1200s` (`20 minutes`) continuously at `0` players, sends `save-all flush`, stops `minecraft.service`, and runs `sudo poweroff` (EC2 transitions to `stopped`).
   - **Important:** Players cannot auto-wake a stopped EC2 instance by connecting in Minecraft; run `mc-server start` (or `mc-friend.sh start`) first.
 

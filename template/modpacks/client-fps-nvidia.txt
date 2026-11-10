@@ -22,6 +22,9 @@ dynamic-fps
 fast-ip-ping
 fastquit
 bobby
+voxy
+voxy-extra
+voxy-worldgen
 modmenu
 cloth-config
 yacl
@@ -41,3 +44,17 @@ fadeless
 clientsort
 prickle
 crash-assistant
+better-clouds
+better-stats
+tcdcommons
+enchantmenthelper
+skyboxify
+resourcify
+minecraftcapes
+freecam
+full-brightness-toggle
+collective
+boat-item-view
+quick-pack
+litematica
+malilib

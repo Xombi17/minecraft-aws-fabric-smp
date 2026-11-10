@@ -122,6 +122,26 @@ def service_is_active(unit: str = "minecraft.service") -> bool:
     return res.returncode == 0
 
 
+def chunky_task_active(log_path: str = "/home/ec2-user/minecraft/logs/latest.log") -> bool:
+    """Return True if Chunky appears to be actively pre-generating chunks."""
+    try:
+        if not os.path.exists(log_path) or (time.time() - os.path.getmtime(log_path)) > 60:
+            return False
+        with open(log_path, "rb") as f:
+            f.seek(0, os.SEEK_END)
+            size = f.tell()
+            f.seek(max(0, size - 8192))
+            tail = f.read().decode("utf-8", errors="replace").splitlines()[-20:]
+        for line in reversed(tail):
+            if "[Chunky] Task finished" in line or "[Chunky] Task cancelled" in line or "[Chunky] Task paused" in line:
+                return False
+            if "[Chunky] Task running" in line or "[Chunky] Task started" in line:
+                return True
+    except Exception:
+        return False
+    return False
+
+
 def system_uptime_seconds() -> float:
     with open("/proc/uptime", "r", encoding="utf-8") as f:
         return float(f.read().split()[0])
@@ -175,6 +195,12 @@ def main() -> None:
         if slp_players > 0 or tcp_clients > 0:
             if idle_since is not None:
                 LOG.info("Player activity detected (slp=%d, tcp=%d); resetting idle timer.", slp_players, tcp_clients)
+            idle_since = None
+            continue
+
+        if chunky_task_active():
+            if idle_since is not None:
+                LOG.info("Active Chunky pre-generation detected; pausing idle shutdown timer.")
             idle_since = None
             continue
 
